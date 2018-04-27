@@ -13,6 +13,7 @@
 		85DD786B208CA006009C580E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85DD7869208CA006009C580E /* Main.storyboard */; };
 		85DD786D208CA008009C580E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DD786C208CA008009C580E /* Assets.xcassets */; };
 		85DD7870208CA008009C580E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85DD786E208CA008009C580E /* LaunchScreen.storyboard */; };
+		85FA33E3209262D0002DC428 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FA33E2209262D0002DC428 /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		85DD786C208CA008009C580E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85DD786F208CA008009C580E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85DD7871208CA008009C580E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85FA33E2209262D0002DC428 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 		8585D639208FEDAF005F4E84 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				85FA33E2209262D0002DC428 /* CategoryViewController.swift */,
 				85DD7867208CA006009C580E /* ToDoListViewController.swift */,
 			);
 			path = Controllers;
@@ -170,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FA33E3209262D0002DC428 /* CategoryViewController.swift in Sources */,
 				85DD7868208CA006009C580E /* ToDoListViewController.swift in Sources */,
 				8585D63C208FEDE8005F4E84 /* DataModel.xcdatamodeld in Sources */,
 				85DD7866208CA006009C580E /* AppDelegate.swift in Sources */,
