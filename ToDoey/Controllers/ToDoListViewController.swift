@@ -45,15 +45,18 @@ class ToDoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(itemArray[indexPath.row])
-        
-//        itemArray[indexPath.row].setValue("Completed", forKey: "title")
-//        toDoItems[indexPath.row].done = !toDoItems[indexPath.row].done
-        
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
 
-//        saveItems()
+        if let item = toDoItems?[indexPath.row] {
+            do {
+                try realm.write {
+//                    realm.delete(item)
+                item.done = !item.done
+                }
+            }catch {
+                print("Error saving done status, \(error)")
+            }
+        }
+        tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
