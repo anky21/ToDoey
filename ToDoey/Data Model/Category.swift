@@ -1,5 +1,5 @@
 //
-//  Data.swift
+//  Category.swift
 //  ToDoey
 //
 //  Created by Anky An on 28/4/18.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Data: Object {
+class Category: Object {
     @objc dynamic var name: String = ""
-    @objc dynamic var age: Int = 0
+    let items = List<Item>()
 }
