@@ -14,6 +14,7 @@ class ToDoListViewController: SwipeTableViewController {
     
     var toDoItems: Results<Item>?
     let realm = try! Realm()
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var selectedCategory : Category? {
         didSet{
@@ -25,10 +26,38 @@ class ToDoListViewController: SwipeTableViewController {
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
+        
         // Do any additional setup after loading the view, typically from a nib.
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
+    
+    // Run after viewDidLoad
+    override func viewWillAppear(_ animated: Bool) {
+        title = selectedCategory?.name
 
+        guard let colorHex = selectedCategory?.colorValue else {fatalError()}
+        
+        updateNavBar(withHexCode: colorHex)
+    }
+    
+    // Reset navigation bar colour when exiting items view
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        updateNavBar(withHexCode: "1D9BF6")
+    }
+    
+    // MARK: Nav bar setup methods
+    func updateNavBar(withHexCode colorHexCode: String) {
+        // Use guard let when it's most likely to be successful
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+        
+        guard let navBarColour = UIColor(hexString: colorHexCode) else {fatalError()}
+        navBar.barTintColor = navBarColour
+        navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: ContrastColorOf(navBarColour, returnFlat: true)]
+        searchBar.barTintColor = navBarColour
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         if let item = toDoItems?[indexPath.row] {
@@ -51,12 +80,12 @@ class ToDoListViewController: SwipeTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         if let item = toDoItems?[indexPath.row] {
             do {
                 try realm.write {
-//                    realm.delete(item)
-                item.done = !item.done
+                    //                    realm.delete(item)
+                    item.done = !item.done
                 }
             }catch {
                 print("Error saving done status, \(error)")
@@ -66,7 +95,7 @@ class ToDoListViewController: SwipeTableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
@@ -105,7 +134,7 @@ class ToDoListViewController: SwipeTableViewController {
     
     func loadItems() {
         toDoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
-
+        
         tableView.reloadData()
     }
     
@@ -124,22 +153,22 @@ class ToDoListViewController: SwipeTableViewController {
 
 // MARK: - Search bar methods
 extension ToDoListViewController: UISearchBarDelegate {
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         toDoItems = toDoItems?.filter("title CONTAINS[cd] %@", searchBar.text).sorted(byKeyPath: "dateCreated", ascending: true)
         tableView.reloadData()
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItems()
-
+            
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-
+            
         }
     }
-
+    
 }
